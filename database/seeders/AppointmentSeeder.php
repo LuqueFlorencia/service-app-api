@@ -19,7 +19,7 @@ class AppointmentSeeder extends Seeder
                 'date' => '2024-08-17',
                 'time' => '15:00',
                 'location' => 'En local',
-                'status' => 'CONFIRMADO',
+                'status' => 'confirmado',
             ],
             [
                 'client_email' => 'lucas@example.com',
@@ -27,7 +27,7 @@ class AppointmentSeeder extends Seeder
                 'date' => '2024-08-19',
                 'time' => '11:00',
                 'location' => 'A domicilio',
-                'status' => 'PENDIENTE',
+                'status' => 'pendiente',
             ],
             [
                 'client_email' => 'mirta@example.com',
@@ -35,7 +35,7 @@ class AppointmentSeeder extends Seeder
                 'date' => '2024-08-20',
                 'time' => '10:00',
                 'location' => 'A domicilio',
-                'status' => 'CANCELADO',
+                'status' => 'cancelado',
             ],
         ];
 
