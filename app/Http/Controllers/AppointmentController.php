@@ -26,7 +26,7 @@ class AppointmentController extends Controller
             'service_id' => 'required|exists:services,id',
             'date' => 'required|date|after_or_equal:today',
             'time' => 'required|date_format:H:i',
-            'status' => 'required|in:pending,confirmed,cancelled,completed',
+            'status' => 'required|in:' . implode(',', Appointment::$statuses),
         ]);
 
         // Obtener el profesional del servicio
@@ -85,7 +85,7 @@ class AppointmentController extends Controller
             'service_id' => 'sometimes|exists:services,id',
             'date' => 'sometimes|date|after_or_equal:today',
             'time' => 'sometimes|date_format:H:i',
-            'status' => 'sometimes|in:pending,confirmed,cancelled,completed',
+            'status' => 'sometimes|in:' . implode(',', Appointment::$statuses),
         ]);
 
         $userId = $validated['client_id'] ?? $appt->client_id;

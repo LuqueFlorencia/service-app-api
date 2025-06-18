@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('profession')->nullable(); // solo para profesionales
             $table->text('description')->nullable();  // solo para profesionales
             $table->string('availability')->nullable();  // solo para profesionales
-            $table->decimal('rating', 3, 2)->nullable();  // solo para profesionales
+            $table->decimal('rating', 2, 1)->nullable();  // solo para profesionales
             $table->timestamps();
         });
     }

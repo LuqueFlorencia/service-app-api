@@ -9,6 +9,16 @@ class Appointment extends Model
 {
     use HasFactory;
 
+    const STATUS_PENDING = 'pendiente';
+    const STATUS_CONFIRMED = 'confirmado';
+    const STATUS_CANCELLED = 'cancelado';
+
+    public static $statuses = [
+        self::STATUS_PENDING,
+        self::STATUS_CONFIRMED,
+        self::STATUS_CANCELLED,
+    ];
+
     protected $fillable = [
         'client_id',
         'professional_id',

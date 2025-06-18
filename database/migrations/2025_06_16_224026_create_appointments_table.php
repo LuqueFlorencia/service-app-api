@@ -15,8 +15,8 @@ return new class extends Migration
             $table->foreignId('service_id')->constrained()->onDelete('cascade');
             $table->date('date');
             $table->time('time');
-            $table->text('location')->default('En local');
-            $table->string('status')->default('pendiente'); // pending, confirmed, cancelled, etc.
+            $table->string('location')->default('En local');
+            $table->enum('status', ['pendiente', 'confirmado', 'cancelado'])->default('pendiente');
             $table->timestamps();
         });
     }
