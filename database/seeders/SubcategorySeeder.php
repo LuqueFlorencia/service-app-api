@@ -11,15 +11,15 @@ class SubcategorySeeder extends Seeder
     public function run()
     {
         $subcategories = [
-            'Peluqueria' => ['Cortes de pelo', 'Barbería', 'Peinados', 'Coloración'],
-            'Electricista' => ['Instalaciones', 'Iluminación', 'Electricista general'],
-            'Carpintería' => ['Aberturas de madera', 'Muebles', 'Machimbre', 'Carpintería general'],
+            'Peluqueria' => ['Cortes de pelo', 'Barberia', 'Peinados', 'Coloracion'],
+            'Electricista' => ['Instalaciones', 'Iluminacion', 'Electricista general'],
+            'Carpinteria' => ['Aberturas de madera', 'Muebles', 'Machimbre', 'Carpinteria general'],
             'Limpieza' => ['Alfombras', 'Limpieza del hogar', 'Limpieza en altura', 'Limpieza general'],
             'Mudanza' => ['Fletes', 'Mudanza nacionales', 'Mudanza internacional', 'Mudanza en general'],
-            'Plomería' => ['Cañerías', 'Filtraciones', 'Sanitarios', 'Pozos sépticos', 'Plomería general'],
-            'Refacción' => ['Refacción de baños', 'Refacción de cocinas', 'Refacción integrales', 'Refacción general'],
+            'Plomeria' => ['Cañerias', 'Filtraciones', 'Sanitarios', 'Pozos septicos', 'Plomeria general'],
+            'Refaccion' => ['Refaccion de baños', 'Refaccion de cocinas', 'Refaccion integrales', 'Refaccion general'],
             'Pintura' => ['Pintura', 'Revestimientos', 'Humedad', 'Otros trabajos'],
-            'Técnico' => ['Computadoras', 'Tablet y celulares', 'Impresoras', 'Electrodomésticos', 'Tecnología general'],
+            'Tecnico' => ['Computadoras', 'Tablet y celulares', 'Impresoras', 'Electrodomesticos', 'Tecnologia general'],
         ];
 
         foreach ($subcategories as $catName => $subs) {

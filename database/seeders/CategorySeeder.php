@@ -12,13 +12,13 @@ class CategorySeeder extends Seeder
         $categories = [
           'Peluqueria', 
           'Electricista', 
-          'Carpintería', 
+          'Carpinteria', 
           'Limpieza', 
           'Mudanza', 
-          'Plomería', 
-          'Refacción', 
+          'Plomeria', 
+          'Refaccion', 
           'Pintura', 
-          'Técnico'];
+          'Tecnico'];
 
         foreach ($categories as $name) {
             Category::create(['name' => $name]);

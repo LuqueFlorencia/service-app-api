@@ -55,7 +55,6 @@ El sistema implementa autenticación basada en tokens mediante *Laravel Sanctum*
 
 * Asociación entre usuario y perfil.
 * CRUD de perfiles.
-* Avatares, ubicación, disponibilidad, rating y descripción.
 
 **3. Gestión de servicios**
 

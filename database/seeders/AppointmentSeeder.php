@@ -15,7 +15,7 @@ class AppointmentSeeder extends Seeder
         $appointments = [
             [
                 'client_email' => 'mirta@example.com',
-                'service_name' => 'Instalación eléctrica completa',
+                'service_name' => 'Instalacion electrica completa',
                 'date' => '2024-08-17',
                 'time' => '15:00',
                 'location' => 'En local',
@@ -23,7 +23,7 @@ class AppointmentSeeder extends Seeder
             ],
             [
                 'client_email' => 'lucas@example.com',
-                'service_name' => 'Corte clásico de cabello',
+                'service_name' => 'Corte clasico de cabello',
                 'date' => '2024-08-19',
                 'time' => '11:00',
                 'location' => 'A domicilio',
@@ -31,7 +31,7 @@ class AppointmentSeeder extends Seeder
             ],
             [
                 'client_email' => 'mirta@example.com',
-                'service_name' => 'Diseño y fabricación de estantes',
+                'service_name' => 'Diseño y fabricacion de estantes',
                 'date' => '2024-08-20',
                 'time' => '10:00',
                 'location' => 'A domicilio',
