@@ -12,7 +12,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return response()->json(Category::with('subcategories')->get(), 200);
+        return response()->json(Category::select('id','name')->with('subcategories:id,category_id,name')->get(), 200);
     }
 
     /**
@@ -36,7 +36,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = Category::with('subcategories')->find($id);
+        $category = Category::select('id','name')->with('subcategories:id,category_id,name')->find($id);
 
         if (!$category) {
             return response()->json(['message' => 'Categoría no encontrada'], 404);

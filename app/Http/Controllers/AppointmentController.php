@@ -13,7 +13,13 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        return response()->json(Appointment::with(['client', 'professional', 'service'])->get(), 200);
+        return response()->json(Appointment::select('id','client_id','professional_id','service_id','date','time','location','status')->with([
+            'client:id,email', 
+            'client.profile:id,user_id,full_name', 
+            'professional:id,email', 
+            'professional.profile:id,user_id,full_name', 
+            'service:id,user_id,name,price'
+        ])->get(), 200);
     }
 
     /**
@@ -26,6 +32,7 @@ class AppointmentController extends Controller
             'service_id' => 'required|exists:services,id',
             'date' => 'required|date|after_or_equal:today',
             'time' => 'required|date_format:H:i',
+            'location' => 'nullable|string|max:255',
             'status' => 'required|in:' . implode(',', Appointment::$statuses),
         ]);
 
@@ -64,7 +71,13 @@ class AppointmentController extends Controller
      */
     public function show(string $id)
     {
-        $appt = Appointment::with(['client', 'professional', 'service'])->find($id);
+        $appt = Appointment::select('id','client_id','professional_id','service_id','date','time','location','status')->with([
+            'client:id,email', 
+            'client.profile:id,user_id,full_name', 
+            'professional:id,email', 
+            'professional.profile:id,user_id,full_name', 
+            'service:id,user_id,name,price'
+        ])->find($id);
         if (!$appt)
             return response()->json(['message' => 'Turno no encontrado'], 404);
 
@@ -81,10 +94,9 @@ class AppointmentController extends Controller
             return response()->json(['message' => 'Turno no encontrado'], 404);
 
         $validated = $request->validate([
-            'client_id' => 'sometimes|exists:users,id',
-            'service_id' => 'sometimes|exists:services,id',
             'date' => 'sometimes|date|after_or_equal:today',
             'time' => 'sometimes|date_format:H:i',
+            'location' => 'sometimes|string|max:255',
             'status' => 'sometimes|in:' . implode(',', Appointment::$statuses),
         ]);
 

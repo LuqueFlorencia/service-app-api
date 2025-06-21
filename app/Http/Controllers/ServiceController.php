@@ -12,7 +12,11 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return response()->json(Service::with('subcategory')->get(), 200);
+        return response()->json(Service::select('id','user_id','subcategory_id','name','description','price')->with([
+            'subcategory:id,name',
+            'professional:id,email',
+            'professional.profile:id,user_id,full_name'
+            ])->get(), 200);
     }
 
     /**
@@ -43,7 +47,11 @@ class ServiceController extends Controller
      */
     public function show(string $id)
     {
-        $service = Service::with('subcategory')->find($id);
+        $service = Service::select('id','user_id','subcategory_id','name','description','price')->with([
+            'subcategory:id,name',
+            'professional:id,email',
+            'professional.profile:id,user_id,full_name'
+            ])->find($id);
         if (!$service)
             return response()->json(['message' => 'Servicio no encontrado'], 404);
 
@@ -62,8 +70,6 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
-            'subcategory_id' => 'required|exists:subcategories,id',
-            'user_id' => 'sometimes|required|exists:users,id',
             'price' => 'nullable|numeric|min:0',
         ]);
 

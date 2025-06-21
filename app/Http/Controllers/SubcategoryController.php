@@ -12,7 +12,7 @@ class SubcategoryController extends Controller
      */
     public function index()
     {
-        return response()->json(Subcategory::with('category')->get(), 200);
+        return response()->json(Subcategory::select('id','category_id','name')->get(), 200);
     }
 
     /**
@@ -35,7 +35,7 @@ class SubcategoryController extends Controller
      */
     public function show(string $id)
     {
-        $subcategory = Subcategory::with('category')->find($id);
+        $subcategory = Subcategory::select('id','category_id','name')->with('category:id,name')->find($id);
 
         if (!$subcategory) {
             return response()->json(['message' => 'Subcategoría no encontrada'], 404);
@@ -56,8 +56,7 @@ class SubcategoryController extends Controller
         }
 
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:subcategories,name,' . $id,
-            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255|unique:subcategories,name,'
         ]);
 
         $validated['name'] = trim($validated['name']);
