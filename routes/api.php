@@ -29,3 +29,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('services', ServiceController::class);
     Route::apiResource('appointments', AppointmentController::class);
 });
+
+Route::get('/reports/services/pdf', [ReportController::class, 'exportServicesPDF'])->name('reports.services.pdf');
+Route::get('/reports/services/excel', [ReportController::class, 'exportServicesExcel'])->name('reports.services.excel');
+Route::get('/reports/appointments/pdf', [ReportController::class, 'exportAppointmentsPDF'])->name('reports.appointments.pdf');
+Route::get('/reports/appointments/excel', [ReportController::class, 'exportAppointmentsExcel'])->name('reports.appointments.excel');

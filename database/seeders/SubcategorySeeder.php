@@ -11,7 +11,7 @@ class SubcategorySeeder extends Seeder
     public function run()
     {
         $subcategories = [
-            'Peluqueria' => ['Cortes de pelo', 'Barberia', 'Peinados', 'Coloracion'],
+            'Belleza' => ['Peluqueria', 'Maquillajes', 'Fragancia', 'Salud Personal'],
             'Electricista' => ['Instalaciones', 'Iluminacion', 'Electricista general'],
             'Carpinteria' => ['Aberturas de madera', 'Muebles', 'Machimbre', 'Carpinteria general'],
             'Limpieza' => ['Alfombras', 'Limpieza del hogar', 'Limpieza en altura', 'Limpieza general'],

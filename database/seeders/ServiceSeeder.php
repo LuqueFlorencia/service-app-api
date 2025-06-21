@@ -14,7 +14,7 @@ class ServiceSeeder extends Seeder
         $services = [
             [
                 'email' => 'martin@example.com',
-                'subcategory' => 'Cortes de pelo',
+                'subcategory' => 'Peluqueria',
                 'name' => 'Corte clasico de cabello',
                 'description' => 'Un corte de cabello clasico para hombres, con estilo y precision.',
                 'price' => 3000,

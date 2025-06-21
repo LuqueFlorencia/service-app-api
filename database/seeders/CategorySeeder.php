@@ -10,7 +10,7 @@ class CategorySeeder extends Seeder
     public function run()
     {
         $categories = [
-          'Peluqueria', 
+          'Belleza', 
           'Electricista', 
           'Carpinteria', 
           'Limpieza', 

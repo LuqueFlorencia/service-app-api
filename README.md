@@ -25,10 +25,11 @@ Universidad Tecnologia Nacional - Facultad Regional de Resistencia (UTN FRRe)
 El sistema se compone de las siguientes entidades principales:
 
 * **User**: Usuario base autenticado. Puede tener rol de `cliente` o `profesional`, y opcionalmente ser `premium`.
-* **Profile**: Información personal y profesional del usuario.
-* **Category** y **Subcategory**: Organización jerárquica de tipos de servicios.
-* **Service**: Servicios ofrecidos por profesionales, con precio, categoría y descripción.
-* **Appointment**: Turnos solicitados por clientes a profesionales.
+* **Profile**: Información personal y profesional del usuario (nombre, dirección, experiencia, etc.).
+* **Category**:  Área general de servicios (Ej: Hogar, Tecnología, Belleza).
+* **Subcategory**: Especialización dentro de una categoría (Ej: Electricista, Plomero).
+* **Service**: Servicios específicos publicados por profesionales, con precio, descripción y subcategoría asociada.
+* **Appointment**: Turnos solicitados por clientes para contratar un servicio ofrecido por un profesional. Incluyen fecha, hora, ubicación y estado.
 
 ---
 
