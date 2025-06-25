@@ -1,61 +1,129 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## 🛠️ Aplicación de Servicios - Backend (PHP-Laravel)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este proyecto es el backend de una aplicación mobile de servicios. El frontend se encuentra desarrollado con *React Native*.
+Permite conectar a clientes con profesionales de diversas áreas (electricistas, carpinteros, plomeros, etc.), gestionar perfiles, servicios ofrecidos y turnos (appointments).
 
-## About Laravel
+Incluye autenticación segura mediante *Laravel Sanctum*, funcionalidades CRUD completas y una estructura de datos relacional.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 👥 Equipo
 
-## Learning Laravel
+Estudiantes de 2do año de la Tecnicatura Universitaria en Programacion (TUP)
+Universidad Tecnologia Nacional - Facultad Regional de Resistencia (UTN FRRe)
+🧑‍💻 Luque Encina, Florencia
+🧑‍💻 Molo, Cecilia
+🧑‍💻 Ranz, Nahuel
+🧑‍💻 Silva, Alejandra Aliné
+🧑‍💻 Velozo Godoy, Matias
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 📁 Estructura del Proyecto
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+El sistema se compone de las siguientes entidades principales:
 
-## Laravel Sponsors
+* **User**: Usuario base autenticado. Puede tener rol de `cliente` o `profesional`, y opcionalmente ser `premium`.
+* **Profile**: Información personal y profesional del usuario (nombre, dirección, experiencia, etc.).
+* **Category**:  Área general de servicios (Ej: Hogar, Tecnología, Belleza).
+* **Subcategory**: Especialización dentro de una categoría (Ej: Electricista, Plomero).
+* **Service**: Servicios específicos publicados por profesionales, con precio, descripción y subcategoría asociada.
+* **Appointment**: Turnos solicitados por clientes para contratar un servicio ofrecido por un profesional. Incluyen fecha, hora, ubicación y estado.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+### 🔐 Autenticación con Laravel Sanctum
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+El sistema implementa autenticación basada en tokens mediante *Laravel Sanctum*, lo que permite:
 
-## Contributing
+* Login con email y contraseña.
+* Generación de tokens de acceso.
+* Protección de rutas usando `auth:sanctum`.
+* Diferenciación de permisos según el rol del usuario.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+### ✅ Funcionalidades Implementadas
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**1. Autenticación y seguridad**
 
-## Security Vulnerabilities
+* Registro e inicio de sesión con validaciones.
+* Roles de usuario (`cliente`, `profesional`).
+* Middleware para proteger rutas sensibles.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**2. Gestión de usuarios y perfiles**
 
-## License
+* Asociación entre usuario y perfil.
+* CRUD de perfiles.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**3. Gestión de servicios**
+
+* Los profesionales pueden publicar servicios.
+* Los servicios se agrupan en categorías y subcategorías.
+
+**4. Turnos (appointments)**
+
+* Los clientes pueden solicitar turnos a profesionales.
+* Estado del turno: `pendiente`, `confirmado`, `cancelado`.
+* Los turnos incluyen fecha, hora, ubicación y servicio contratado.
+
+---
+
+### 🧪 Herramientas y tecnologías
+
+* PHP 8+
+* Laravel 12+
+* Laravel Sanctum
+* Laravel Excel
+* DomPDF
+* Eloquent ORM
+* Seeders & Factories
+* Middleware y validaciones de Laravel
+
+---
+
+### 🚀 Instalación del proyecto
+
+```bash
+git clone https://github.com/LuqueFlorencia/service-app-api.git
+cd service-app-api
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan serve
+```
+
+---
+
+### 📌 Rúbrica para el Trabajo Final de Programación III con Laravel
+* 1️⃣ Estructura y Modelado de Datos (20 puntos)
+* ✔️ Cantidad mínima de tablas: El proyecto debe incluir al menos cinco tablas correctamente estructuradas. (4 puntos)
+* ✔️ Relaciones entre entidades: Se deben implementar al menos tres relaciones uno a muchos de manera adecuada. (6 puntos)
+* ✔️ Uso de migraciones: Las tablas y relaciones deben ser creadas mediante migraciones de Laravel. (5 puntos)
+* ✔️ Integridad referencial: Uso correcto de claves foráneas y restricciones para garantizar la coherencia de los datos. (5 puntos)
+
+* 2️⃣ Funcionalidad y Lógica de Negocio (25 puntos)
+* ✔️ Autenticación y seguridad: Implementación de un sistema de autenticación con gestión de roles y permisos. (6 puntos)
+* ✔️ Operaciones CRUD: Correcta implementación de las operaciones de creación, lectura, actualización y eliminación. (6 puntos)
+* ✔️ Validaciones: Aplicación de reglas de validación en formularios para garantizar la integridad de los datos. (5 puntos)
+* ✔️ Manejo de errores y excepciones: Gestión de respuestas adecuadas ante posibles errores del sistema. (4 puntos)
+* ✔️ Optimización de consultas: Uso de Eloquent y query builders para mejorar la eficiencia y rendimiento. (4 puntos)
+
+* 3️⃣ Generación de Reportes y Exportaciones (15 puntos)
+* ✔️ Exportación de datos: Implementación de funcionalidades para exportar registros a formatos Excel y PDF. (6 puntos)
+* ✔️ Reportes dinámicos en PDF: Uso de herramientas como DomPDF para generar informes personalizados. (5 puntos)
+* ✔️ Interfaz de descarga: Inclusión de botones o enlaces funcionales para la descarga de reportes. (4 puntos)
+
+* 4️⃣ Interfaz y Usabilidad (15 puntos)
+* ✔️ Diseño responsivo: Adaptación a distintos dispositivos mediante el uso de Bootstrap o Tailwind CSS. (5 puntos)
+* ✔️ Interfaz intuitiva: Organización clara de las funcionalidades y navegación eficiente. (5 puntos)
+* ✔️ Uso de AJAX: Implementación de llamadas asincrónicas para mejorar la experiencia del usuario. (5 puntos)
+
+* 5️⃣ Documentación y Presentación (15 puntos)
+* ✔️ Código estructurado y documentado: Uso de comentarios explicativos y buenas prácticas de programación. (5 puntos)
+* ✔️ Guía de instalación y uso: Documentación detallada sobre la configuración y despliegue del sistema. (5 puntos)
+* ✔️ Presentación del proyecto: Exposición oral con demostración funcional de la aplicación. (5 puntos)
+
+**Total: 100 puntos**
