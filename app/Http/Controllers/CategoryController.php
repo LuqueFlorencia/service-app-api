@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Obtener la lista de categorías, junto con sus subcategorías.
      */
     public function index()
     {
@@ -16,7 +16,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crear una nueva categoría.
      */
     public function store(Request $request)
     {
@@ -32,7 +32,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Obtener una categoría específica por su ID, junto con sus subcategorías.
      */
     public function show(string $id)
     {
@@ -46,7 +46,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Modificar la información de una categoría existente.
      */
     public function update(Request $request, string $id)
     {
@@ -66,7 +66,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminar una categoría existente.
      */
     public function destroy(string $id)
     {

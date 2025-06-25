@@ -27,7 +27,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('subcategories', SubcategoryController::class);
     Route::apiResource('services', ServiceController::class);
+    
     Route::apiResource('appointments', AppointmentController::class);
+    Route::put('appointments/{id}/status', [AppointmentController::class, 'updateStatus']);
 });
 
 Route::get('/reports/services/pdf', [ReportController::class, 'exportServicesPDF'])->name('reports.services.pdf');

@@ -12,6 +12,14 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
+    const ROLE_CLIENT = 'client';
+    const ROLE_PROFESSIONAL = 'professional';
+
+    public static $roles = [
+        self::ROLE_CLIENT,
+        self::ROLE_PROFESSIONAL,
+    ];
+
     protected $fillable = [
         'email',
         'password',

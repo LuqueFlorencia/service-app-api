@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ServiceController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Obtener la lista de servicios, acompañados de sus subcategorías y profesionales.
      */
     public function index()
     {
@@ -16,23 +16,29 @@ class ServiceController extends Controller
             'subcategory:id,name',
             'professional:id,email',
             'professional.profile:id,user_id,full_name'
-            ])->get(), 200);
+        ])->get(), 200);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crear un nuevo servicio (solo los profesionales).
      */
     public function store(Request $request)
     {
+        $user = $request->user();
+        if ($user->role !== 'professional') {
+            return response()->json(['message' => 'Solo los profesionales pueden crear servicios.'], 403);
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'subcategory_id' => 'required|exists:subcategories,id',
-            'user_id' => 'required|exists:users,id',
             'price' => 'nullable|numeric|min:0',
         ]);
 
+        $validated['user_id'] = $user->id;
         $validated['name'] = trim($validated['name']);
+
         if (isset($validated['description'])) {
             $validated['description'] = trim($validated['description']);
         }
@@ -43,7 +49,7 @@ class ServiceController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Obtener un servicio específico por su ID, junto con su subcategoría y profesional.
      */
     public function show(string $id)
     {
@@ -52,20 +58,27 @@ class ServiceController extends Controller
             'professional:id,email',
             'professional.profile:id,user_id,full_name'
             ])->find($id);
-        if (!$service)
+
+        if (!$service) {
             return response()->json(['message' => 'Servicio no encontrado'], 404);
+        }
 
         return response()->json($service);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualizar un servicio existente (solo los profesionales).
      */
     public function update(Request $request, string $id)
     {
         $service = Service::find($id);
-        if (!$service)
+        if (!$service) {
             return response()->json(['message' => 'Servicio no encontrado'], 404);
+        }
+
+        if ($request->user()->role !== 'professional' || $request->user()->id !== $service->user_id) {
+            return response()->json(['message' => 'No autorizado para modificar este servicio.'], 403);
+        }
 
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
@@ -79,14 +92,19 @@ class ServiceController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminar un servicio (solo los profesionales).
      */
     public function destroy(string $id)
     {
         $service = Service::find($id);
-        
-        if (!$service)
+
+        if (!$service) {
             return response()->json(['message' => 'Servicio no encontrado'], 404);
+        }
+        
+        if ($request->user()->role !== 'professional' || $request->user()->id !== $service->user_id) {
+            return response()->json(['message' => 'No autorizado para eliminar este servicio.'], 403);
+        }
 
         $service->delete();
 

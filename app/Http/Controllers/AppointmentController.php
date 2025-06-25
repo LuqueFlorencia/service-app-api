@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class AppointmentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Obtener la lista de turnos, junto con los detalles del cliente, profesional y servicio.
      */
     public function index()
     {
@@ -23,12 +23,16 @@ class AppointmentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crear un nuevo turno (solo los clientes).
      */
     public function store(Request $request)
     {
+        $user = $request->user();
+        if ($user->role !== 'client') {
+            return response()->json(['message' => 'Solo los clientes pueden solicitar turnos.'], 403);
+        }
+
         $validated = $request->validate([
-            'client_id' => 'required|exists:users,id',
             'service_id' => 'required|exists:services,id',
             'date' => 'required|date|after_or_equal:today',
             'time' => 'required|date_format:H:i',
@@ -36,8 +40,10 @@ class AppointmentController extends Controller
             'status' => 'required|in:' . implode(',', Appointment::$statuses),
         ]);
 
+        $validated['client_id'] = $user->id;
+
         // Obtener el profesional del servicio
-        $service = Service::findOrFail($validated['service_id']);
+        $service = Service::with('professional')->findOrFail($validated['service_id']);
         $validated['professional_id'] = $service->professional->id;
 
         // Validar duplicado para cliente
@@ -67,7 +73,7 @@ class AppointmentController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Obtener un turno específico por su ID, junto con los detalles del cliente, profesional y servicio.
      */
     public function show(string $id)
     {
@@ -85,7 +91,7 @@ class AppointmentController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Modificar un turno existente.
      */
     public function update(Request $request, string $id)
     {
@@ -143,7 +149,36 @@ class AppointmentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Actualizar el estado de un turno (solo el profesional asignado).
+     */
+    public function updateStatus(Request $request, string $id)
+    {
+        $user = $request->user();
+        $appt = Appointment::find($id);
+
+        if (!$appt) {
+            return response()->json(['message' => 'Turno no encontrado'], 404);
+        }
+
+        // Solo el profesional asignado puede modificarlo
+        if ($user->role !== 'professional' || $user->id !== $appt->professional_id) {
+            return response()->json(['message' => 'No autorizado para cambiar el estado de este turno.'], 403);
+        }
+
+        $validated = $request->validate([
+            'status' => 'required|in:' . implode(',', Appointment::$statuses),
+        ]);
+
+        $appt->update(['status' => $validated['status']]);
+
+        return response()->json([
+            'message' => 'Estado actualizado correctamente.',
+            'appointment' => $appt
+        ]);
+    }
+
+    /**
+     * Eliminar un turno existente.
      */
     public function destroy(string $id)
     {

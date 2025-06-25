@@ -10,13 +10,16 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Obtener la lista de usuarios.
      */
     public function index()
     {
         return response()->json(User::select('id','email','role','is_premium')->get(), 200);
     }
 
+    /**
+     * Obtener un usuario específico por su ID, acompañado de la información de su perfil.
+     */
     public function me(Request $request)
     {
         $user = $request->user()->load('profile');
@@ -36,7 +39,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Modificar la información del perfil de un usuario existente.
      */
     public function update(Request $request, string $id)
     {
@@ -72,8 +75,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     * Este metodo actualiza el estado premium de un usuario.
+     * Actualiza el estado premium de un usuario.
      */
     public function updatePremium(string $id)
     {
@@ -94,14 +96,15 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminar un usuario por su ID.
      */
     public function destroy(string $id)
     {
         $user = User::with('profile')->find($id);
 
-        if (!$user) 
+        if (!$user) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
 
         $user->delete();
 

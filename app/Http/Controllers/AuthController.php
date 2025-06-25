@@ -9,12 +9,16 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    /**
+     * Registrar un nuevo usuario (se crea el registro de user como del perfil). 
+     * Puede ser cliente o profesional.
+     */
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'email'    => 'required|email|unique:users',
+            'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
-            'role'     => 'required|in:client,professional',
+            'role' => 'required|in:' . implode(',', User::$roles),
 
             // Datos del perfil
             'full_name' => 'required|string|max:255',
@@ -64,6 +68,9 @@ class AuthController extends Controller
         ], 201);
     }
 
+    /**
+     * Iniciar sesión de un usuario existente.
+     */
     public function login(Request $request)
     {
         $validated = $request->validate([
@@ -82,6 +89,9 @@ class AuthController extends Controller
         return response()->json(['user' => $user, 'token' => $token]);
     }
 
+    /**
+     * Cerrar sesión del usuario actual.
+     */
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();

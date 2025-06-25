@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class SubcategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Obtener la lista de subcategorías.
      */
     public function index()
     {
@@ -16,7 +16,7 @@ class SubcategoryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crear una nueva subcategoría.
      */
     public function store(Request $request)
     {
@@ -31,7 +31,7 @@ class SubcategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Obtener una subcategoría específica por su ID, junto con su categoría.
      */
     public function show(string $id)
     {
@@ -45,7 +45,7 @@ class SubcategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Modificar la información de una subcategoría existente.
      */
     public function update(Request $request, string $id)
     {
@@ -67,7 +67,7 @@ class SubcategoryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminar una subcategoría existente.
      */
     public function destroy(string $id)
     {
