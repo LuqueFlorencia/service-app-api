@@ -2,47 +2,55 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    const ROLE_CLIENT = 'client';
+    const ROLE_PROFESSIONAL = 'professional';
+
+    public static $roles = [
+        self::ROLE_CLIENT,
+        self::ROLE_PROFESSIONAL,
+    ];
+
     protected $fillable = [
-        'name',
         'email',
         'password',
+        'role',
+        'is_premium',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    public function profile()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasOne(Profile::class);
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
+
+    public function appointmentsAsClient()
+    {
+        return $this->hasMany(Appointment::class, 'client_id');
+    }
+
+    public function appointmentsAsProfessional()
+    {
+        return $this->hasMany(Appointment::class, 'professional_id');
+    }
+
+    public function ads()
+    {
+        return $this->hasMany(Ad::class, 'client_id');
     }
 }
