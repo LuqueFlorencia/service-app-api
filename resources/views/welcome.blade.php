@@ -24,7 +24,7 @@
         </p>
 
         <div class="alert alert-info mt-4">
-            Laravel 12 + Sanctum + Eloquent + Reportes PDF/Excel + Autenticación por Roles
+            Laravel 12 + Sanctum + Eloquent + Autenticación por Roles
         </div>
 
         <h2 class="section-title">👥 Equipo de Desarrollo</h2>

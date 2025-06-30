@@ -48,9 +48,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Appointment::class, 'professional_id');
     }
-
-    public function ads()
-    {
-        return $this->hasMany(Ad::class, 'client_id');
-    }
 }

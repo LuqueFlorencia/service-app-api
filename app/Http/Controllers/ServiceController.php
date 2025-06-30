@@ -94,15 +94,18 @@ class ServiceController extends Controller
     /**
      * Eliminar un servicio (solo los profesionales).
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
         $service = Service::find($id);
 
         if (!$service) {
             return response()->json(['message' => 'Servicio no encontrado'], 404);
         }
-        
-        if ($request->user()->role !== 'professional' || $request->user()->id !== $service->user_id) {
+
+        if (
+            $request->user()->role !== 'professional' ||
+            $request->user()->id !== $service->user_id
+        ) {
             return response()->json(['message' => 'No autorizado para eliminar este servicio.'], 403);
         }
 
