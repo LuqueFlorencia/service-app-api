@@ -95,24 +95,30 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user = $request->user();
         $appt = Appointment::find($id);
-        if (!$appt)
+
+        if (!$appt) {
             return response()->json(['message' => 'Turno no encontrado'], 404);
+        }
+
+        // Solo el cliente que reservó el turno puede modificarlo
+        if ($user->role !== 'client' || $user->id !== $appt->client_id) {
+            return response()->json(['message' => 'No autorizado para modificar este turno.'], 403);
+        }
 
         $validated = $request->validate([
             'date' => 'sometimes|date|after_or_equal:today',
             'time' => 'sometimes|date_format:H:i',
             'location' => 'sometimes|string|max:255',
-            'status' => 'sometimes|in:' . implode(',', Appointment::$statuses),
         ]);
 
-        $userId = $validated['client_id'] ?? $appt->client_id;
-        $serviceId = $validated['service_id'] ?? $appt->service_id;
+        $serviceId = $appt->service_id;
         $date = $validated['date'] ?? $appt->date;
         $time = $validated['time'] ?? $appt->time;
 
         // Validar duplicado para cliente
-         $existsClient = Appointment::where('client_id', $userId)
+        $existsClient = Appointment::where('client_id', $appt->client_id)
             ->where('service_id', $serviceId)
             ->where('date', $date)
             ->where('time', $time)
@@ -147,6 +153,7 @@ class AppointmentController extends Controller
 
         return response()->json($appt);
     }
+
 
     /**
      * Actualizar el estado de un turno (solo el profesional asignado).
